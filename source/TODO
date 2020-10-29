@@ -1,0 +1,8 @@
+1. Server parser commands from client
+2. write client 
+	2.1. client send command size in manage socket 
+	2.2. client send command and file metadata 
+	2.3. client send file data in data socket
+3. commands:
+	3.1. sendfile
+	3.2. getfile
