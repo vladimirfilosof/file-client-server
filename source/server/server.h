@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <cstring>
 
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -22,6 +23,8 @@ public:
 private:
 	int data_listner, manage_listner, data_sock, manage_sock;
 	sockaddr_in sa;
+
+	void datacpy(char* from, char* to, int from_shift, int count_bytes);
 };
 
 #endif

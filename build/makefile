@@ -1,9 +1,13 @@
-SOURCE_DIR = ../source/
+SERVER_DIR = ../source/server/*
+CLIENT_DIR = ../source/client/*
 
-all: server
+all: server client
 
-server: $(SOURCE_DIR)server.cpp
-	g++ $(SOURCE_DIR)server.cpp -O0 -Wall -o server
+server: $(SERVER_DIR)
+	g++ $(SERVER_DIR) -O0 -Wall -o server
+
+client: $(CLIENT_DIR)
+	g++ $(CLIENT_DIR) -o client
 
 clear:
-	rm server
+	rm server client *.o
