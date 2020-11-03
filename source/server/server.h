@@ -18,13 +18,13 @@ public:
 	Server(int domain, unsigned short int data_port, unsigned short int manage_port, const char* ip);
 	~Server();
 
-	int manage_signal_handler();
+	void manage_signal_handler();
 
 private:
 	int data_listner, manage_listner, data_sock, manage_sock;
 	sockaddr_in sa;
 
-	void datacpy(char* from, char* to, int from_shift, int count_bytes);
+	int get_file(const char* file_dir, const char* file_name, int file_length);
 };
 
 #endif
