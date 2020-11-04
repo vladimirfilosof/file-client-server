@@ -18,6 +18,6 @@ make
 ./client server-ip command [path/to/file] [dir/on/server]
 ```
 
-Now supporting theese commands:
+Now supporting theese commands: \
 sendfile path/to/file [dir/on/server]
 
