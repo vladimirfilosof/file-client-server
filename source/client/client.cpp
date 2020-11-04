@@ -31,36 +31,35 @@ int Client::send_command(const char* command, const char* file_path, const char*
 	const char* file_name = p.filename().c_str();
 	std::ifstream file(p);
 	int file_size = fs::file_size(p);
+	int message_length = 0;
+	int sizes[4]; //command length, file name length, file dir length, file_length
 
-	int sizes[5]; //message length, command length, file name length, file dir length, file_length
+	sizes[0] = strlen(command);
+	sizes[1] = strlen(file_name);
+	sizes[2] = strlen(file_dir);
+	sizes[3] = file_size;
 
-	sizes[0] = 0;
-	sizes[1] = strlen(command);
-	sizes[2] = strlen(file_name);
-	sizes[3] = strlen(file_dir);
-	
-	sizes[4] = file_size;
 
-	for (int i = 1; i < 4; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
-		sizes[0] += sizes[i];
+		message_length += sizes[i];
 	}
 
-	char* buf = new char[ sizes[0] ];
+	char* buf = new char[ message_length ];
 
-	memcpy(buf, command, sizes[1]);
-	memcpy(buf + sizes[1], file_name, sizes[2]);
-	memcpy(buf + sizes[1] + sizes[2], file_dir, sizes[3]);
+	memcpy(buf, command, sizes[0]);
+	memcpy(&buf[ sizes[0] ], file_name, sizes[1]);
+	memcpy(&buf[ sizes[0] + sizes[1] ], file_dir, sizes[2]);
 	
 	std::cout << "Message in manage socket: ";
-	for (int i = 0; i < sizes[0]; ++i) std::cout << buf[i];
+	for (int i = 0; i < message_length; ++i) std::cout << buf[i];
 	std::cout << std::endl;
 
-	char* file_buf = new char[ sizes[4] ];
+	char* file_buf = new char[ sizes[3] ];
 	file.read(file_buf, file_size);
 
 	send(manage_sock, sizes, sizeof(sizes), 0);
-	send(manage_sock, buf, sizeof(buf), 0);
+	send(manage_sock, buf, message_length, 0);
 
 	send_file(file_buf, file_size);
 	return 1;

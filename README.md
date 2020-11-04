@@ -7,8 +7,11 @@ Fake ftp client-server
 \# make
 
 ## Using server
-\# ./server manage-port data-port
+\# ./server
 
 ## Using client
-\# ./client command [path/to/file] [dir/on/server]
+\# ./client server-ip command [path/to/file] [dir/on/server]
+
+now supporting theese commands:
+sendfile path/to/file [dir/on/server]
 
